@@ -5,6 +5,16 @@
 (function () {
     'use strict';
 
+    // same-origin test: relative URLs and same-origin absolutes pass through;
+    // only true cross-origin requests (ads/telemetry) get a benign fake reply
+    function isExternal(u) {
+        if (!/^https?:\/\//i.test(u)) return false;
+        try {
+            var a = new URL(u, location.href);
+            return a.origin !== location.origin;
+        } catch (e) { return true; }
+    }
+
     // ---- 1. telemetry / ad-network neutralization ----
     var origOpen = XMLHttpRequest.prototype.open;
     var origSend = XMLHttpRequest.prototype.send;
@@ -15,7 +25,7 @@
     };
     XMLHttpRequest.prototype.send = function () {
         var u = this.__gdUrl || '';
-        if (/^https?:\/\//i.test(u) && u.indexOf('127.0.0.1') === -1 && u.indexOf('localhost') === -1) {
+        if (isExternal(u)) {
             var self = this;
             Object.defineProperty(this, 'readyState', { get: function () { return 4; } });
             Object.defineProperty(this, 'status', { get: function () { return 200; } });
@@ -34,7 +44,7 @@
     if (origFetch) {
         window.fetch = function (input) {
             var u = typeof input === 'string' ? input : (input && input.url) || '';
-            if (/^https?:\/\//i.test(u) && u.indexOf('127.0.0.1') === -1 && u.indexOf('localhost') === -1) {
+            if (isExternal(u)) {
                 return Promise.resolve(new Response('{}', { status: 200, headers: { 'Content-Type': 'application/json' } }));
             }
             return origFetch.apply(this, arguments);

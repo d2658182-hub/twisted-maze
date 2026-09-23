@@ -1,0 +1,1 @@
+[{"__type__":"cc.SpriteFrame","content":{"name":"particle_texture_1","texture":"f1o9Twh/lBgr57mR9mErhj","rect":[0,0,294,108],"offset":[0,0],"originalSize":[294,108],"capInsets":[0,0,0,0]}},{"__type__":"cc.ParticleAsset","_name":"mainbuttonparticle","_native":".plist","spriteFrame":{"__uuid__":"19AQifj+BGIJ1PsF4QsTfx"}}]

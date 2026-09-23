@@ -1,0 +1,1 @@
+[{"__type__":"cc.AnimationClip","_name":"round_right","_duration":4,"wrapMode":2,"curveData":{"props":{"angle":[{"frame":0,"value":0},{"frame":4,"value":-360}]}}},{"__type__":"cc.AnimationClip","_name":"round_left","_duration":3.5166666666666666,"wrapMode":2,"curveData":{"props":{"angle":[{"frame":0,"value":0},{"frame":3.5166666666666666,"value":360}]}}}]
